@@ -5,6 +5,11 @@ An api for my personal stuff, which is used by [anishshobithps.com](https://anis
 - Node.js
 - Git
 
+## Tech Stack
+> [!NOTE]
+> TypeScript
+> Hono.js
+
 ## Setting up and Running
 > [!NOTE]
 > To avoid confusions, I suggest creating one common directory for the API code and website code, then we can clone both project to the that common directory.
