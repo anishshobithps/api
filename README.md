@@ -6,12 +6,11 @@ An api for my personal stuff, which is used by [anishshobithps.com](https://anis
 - Git
 
 ## Tech Stack
-> [!NOTE]
-> TypeScript
-> Hono.js
+* TypeScript
+* Hono.js
 
 ## Setting up and Running
-> [!NOTE]
+> [!IMPORTANT]
 > To avoid confusions, I suggest creating one common directory for the API code and website code, then we can clone both project to the that common directory.
 
 1. Create the common directory, skip if you already made the common directory while cloning the [website](https://github.com/anishshobithps/anishshobithps.com).
