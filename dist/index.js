@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_server_1 = require("@hono/node-server");
 const bearer_auth_1 = require("hono/bearer-auth");
@@ -6,6 +9,7 @@ const cors_1 = require("hono/cors");
 const pretty_json_1 = require("hono/pretty-json");
 const hono_1 = require("hono");
 const nodemailer_1 = require("nodemailer");
+const ejs_1 = __importDefault(require("ejs"));
 require("dotenv/config");
 const app = new hono_1.Hono();
 app.use("*", (0, pretty_json_1.prettyJSON)());
@@ -32,12 +36,10 @@ app.post("/sendemail", async (c) => {
             name,
             address: process.env.EMAIL_ADDRESS,
         },
-        to: process.env.EMAIL_ADDRESS,
+        to: email,
+        cc: process.env.EMAIL_ADDRESS,
         subject,
-        text: `
-    Email: ${email}
-    ${message}`,
-        html: `<b>${message}</b>`,
+        html: await ejs_1.default.renderFile("./src/email.ejs", { message }),
     };
     // Send email using the primary SMTP server
     try {

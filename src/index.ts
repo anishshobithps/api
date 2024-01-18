@@ -4,6 +4,8 @@ import { cors } from "hono/cors";
 import { prettyJSON } from "hono/pretty-json";
 import { Hono } from "hono";
 import { createTransport, SendMailOptions } from "nodemailer";
+import ejs from "ejs";
+
 import "dotenv/config";
 
 const app = new Hono();
@@ -40,12 +42,10 @@ app.post("/sendemail", async (c) => {
       name,
       address: process.env.EMAIL_ADDRESS!,
     },
-    to: process.env.EMAIL_ADDRESS,
+    to: email,
+    cc: process.env.EMAIL_ADDRESS,
     subject,
-    text: `
-    Email: ${email}
-    ${message}`,
-    html: `<b>${message}</b>`,
+    html: await ejs.renderFile("./src/email.ejs", { message }),
   };
 
   // Send email using the primary SMTP server
