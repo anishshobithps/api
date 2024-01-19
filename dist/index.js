@@ -12,6 +12,7 @@ const nodemailer_1 = require("nodemailer");
 const ejs_1 = __importDefault(require("ejs"));
 require("dotenv/config");
 const app = new hono_1.Hono();
+const isDev = process.env.NODE_ENV === "development";
 app.use("*", (0, pretty_json_1.prettyJSON)());
 app.use("*", (0, cors_1.cors)());
 app.notFound((c) => c.json({ message: "Not Found", ok: false }, 404));
@@ -39,7 +40,7 @@ app.post("/sendemail", async (c) => {
         to: email,
         cc: process.env.EMAIL_ADDRESS,
         subject,
-        html: await ejs_1.default.renderFile("./src/email.ejs", { message }),
+        html: await ejs_1.default.renderFile("./templates/email.ejs", { message }),
     };
     // Send email using the primary SMTP server
     try {

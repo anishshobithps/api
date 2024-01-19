@@ -9,6 +9,7 @@ import ejs from "ejs";
 import "dotenv/config";
 
 const app = new Hono();
+const isDev = process.env.NODE_ENV === "development";
 
 app.use("*", prettyJSON());
 app.use("*", cors());
@@ -45,7 +46,7 @@ app.post("/sendemail", async (c) => {
     to: email,
     cc: process.env.EMAIL_ADDRESS,
     subject,
-    html: await ejs.renderFile("./src/email.ejs", { message }),
+    html: await ejs.renderFile("./templates/email.ejs", { message }),
   };
 
   // Send email using the primary SMTP server
